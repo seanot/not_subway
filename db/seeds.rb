@@ -8,3 +8,7 @@ CSV.foreach("db/restaurants.csv", :headers => true, :header_converters => :symbo
                     food_type: row[:food_type])
 end
 
+Restaurant.create(name: 'Subway',
+                  address: '400 N Orleans 60610',
+                  avg_price: 'You know.',
+                  food_type: 'Shit Sandwiches')
