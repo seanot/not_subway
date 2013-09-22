@@ -105,8 +105,8 @@ $(document).ready(function() {
       data: $(this).serialize(),
       dataType: 'json'
     }).done( function(restaurants){
-      for (var i in restaurants) {
-        codeAddress(restaurants[i].restaurant.address + " Chicago", restaurants[i].restaurant, "eat.png");
+      for (var i=0; i < 100; i++) {
+        setTimeout(codeAddress(restaurants[i].address + " Chicago", restaurants[i], "eat.png"),500);
       }
     });
   });
@@ -119,9 +119,7 @@ $(document).ready(function() {
       data: $(this).serialize(),
       dataType: 'json'
     }).done(function(restaurant) {
-      codeAddress(restaurant.restaurant.address + " Chicago", restaurant.restaurant, "no_eat.png");
+      codeAddress(restaurant.address + " Chicago", restaurant, "no_eat.png");
     });
   });
-
 });
-
