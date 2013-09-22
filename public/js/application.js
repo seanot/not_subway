@@ -22,12 +22,17 @@ function initialize() {
   infowindow = new google.maps.InfoWindow({ maxWidth: 320 }); 
 }
 
-function codeAddress() {
-  var address = document.getElementById('zip').value;
+function codeAddress(address, restaurant) {
   geocoder.geocode( { 'address': address}, function(results, status) {
     if (status == google.maps.GeocoderStatus.OK) {
-      map.setCenter(results[0].geometry.location);
-      
+      lat = results[0].geometry.location.ob;
+      lng = results[0].geometry.location.pb;
+      html = "<b>" + restaurant.name + "</b>" + "  - $" + 
+              restaurant.avg_price + "<br>" + 
+              restaurant.food_type + "<br><br>" +
+              restaurant.address 
+              ;
+      setMarker(lat, lng, html);
     } else {
       alert('Geocode was not successful for the following reason: ' + status);
     }
@@ -55,23 +60,21 @@ function onItemClick(event, pin) {
   // Replace our Info Window's content and position 
   infowindow.setContent(contentString); 
   infowindow.setPosition(pin.position); 
-  infowindow.open(map) 
+  infowindow.open(map, pin) 
 } 
 
 $(document).ready(function() {
   initialize();
-  
   $('#search_form').on('submit', function(event) {
     event.preventDefault();
-    console.log("prevented");
     $.ajax({
-      url: '/restaurant',
+      url: '/restaurants',
       method: 'get',
-      data: $(this).serialize();
+      data: $(this).serialize(),
       dataType: 'json'
     }).done( function(restaurants){
       for (var i in restaurants) {
-        // Place Marker
+        codeAddress(restaurants[i].restaurant.address + " Chicago", restaurants[i].restaurant);
       }
     });
   });
