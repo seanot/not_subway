@@ -17,7 +17,7 @@ gem 'rake'
 gem 'pry'
 
 gem 'nokogiri'
-
+gem 'mechanize'
 
 gem 'shotgun'
 
