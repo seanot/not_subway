@@ -60,11 +60,22 @@ function onItemClick(event, pin) {
 
 $(document).ready(function() {
   initialize();
-  console.log(map);
-  $('#srch_map').on('submit', function(event) {
+  
+  $('#search_form').on('submit', function(event) {
     event.preventDefault();
-    codeAddress();
+    console.log("prevented");
+    $.ajax({
+      url: '/restaurant',
+      method: 'get',
+      data: $(this).serialize();
+      dataType: 'json'
+    }).done( function(restaurants){
+      for (var i in restaurants) {
+        // Place Marker
+      }
+    });
   });
+
 
 });
 
