@@ -19,7 +19,7 @@ function initialize() {
   
 
   var mapOptions = {
-    zoom: 17,
+    zoom: 16,
     center: dbc,
     mapTypeId: google.maps.MapTypeId.ROADMAP
   }
@@ -35,8 +35,6 @@ function initialize() {
     map: map,
     data: 'DBC!'
   });
-
-  
 
   google.maps.event.addListener(marker, 'click', function() { 
     map.setCenter(new google.maps.LatLng(marker.position.lat(), marker.position.lng())); 
@@ -54,7 +52,9 @@ function codeAddress(address, restaurant, i_type) {
       html = "<b>" + restaurant.name + "</b>" + "  - $" + 
               restaurant.avg_price + "<br>" + 
               restaurant.food_type + "<br><br>" +
-              restaurant.address 
+              "Votes: " + restaurant.votes + "<a href='/restaurant/" + restaurant.id + "/up'> + </a>" + 
+              "<a href='/restaurant/" + restaurant.id + "/down'> - </a><br>" + 
+              restaurant.address
               ;
       setMarker(lat, lng, html, i_type);
     } else {

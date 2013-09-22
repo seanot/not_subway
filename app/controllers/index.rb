@@ -23,3 +23,17 @@ end
 get '/assumption' do
   @assumption = Restaurant.find(params["assumption"].to_i).to_json
 end
+
+get '/restaurant/:id/up' do
+  @restaurant = Restaurant.find(params[:id])
+  @restaurant.votes += 1
+  @restaurant.save
+  redirect '/'
+end
+
+get '/restaurant/:id/down' do
+  @restaurant = Restaurant.find(params[:id])
+  @restaurant.votes -= 1
+  @restaurant.save
+  redirect '/'
+end
