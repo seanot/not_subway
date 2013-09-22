@@ -1,17 +1,24 @@
-google.maps.event.addDomListener(window, 'load', initialize);
+// google.maps.event.addDomListener(window, 'load', initialize);
 
 var geocoder;
 var map;
-
+var dbc;
 function initialize() {
   geocoder = new google.maps.Geocoder();
-  var latlng = new google.maps.LatLng(41.9483, -87.6556);
+  var dbc = new google.maps.LatLng(41.88991, -87.63766);
   var mapOptions = {
-    zoom: 14,
-    center: latlng,
+    zoom: 17,
+    center: dbc,
     mapTypeId: google.maps.MapTypeId.ROADMAP
   }
   map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+  
+  var marker = new google.maps.Marker({
+      position: dbc,
+      map: map,
+      title: 'Hello World!'
+  });
+  
   infowindow = new google.maps.InfoWindow({ maxWidth: 320 }); 
 }
 
@@ -52,7 +59,8 @@ function onItemClick(event, pin) {
 } 
 
 $(document).ready(function() {
-
+  initialize();
+  console.log(map);
   $('#srch_map').on('submit', function(event) {
     event.preventDefault();
     codeAddress();
