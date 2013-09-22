@@ -105,7 +105,7 @@ $(document).ready(function() {
       data: $(this).serialize(),
       dataType: 'json'
     }).done( function(restaurants){
-      for (var i=0; i < 100; i++) {
+      for (var i in restaurants) {
         setTimeout(codeAddress(restaurants[i].address + " Chicago", restaurants[i], "eat.png"),500);
       }
     });
