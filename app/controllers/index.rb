@@ -19,3 +19,7 @@ get '/restaurants' do
     erb :restaurants
   end
 end
+
+get '/assumption' do
+  @assumption = Restaurant.find(params["assumption"].to_i).to_json
+end
