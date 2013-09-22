@@ -16,6 +16,8 @@ gem 'activerecord'
 gem 'rake'
 gem 'pry'
 
+gem 'nokogiri'
+
 gem 'shotgun'
 
 group :test do
