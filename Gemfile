@@ -1,4 +1,5 @@
-source :rubygems
+source 'http://rubygems.org'
+ruby '1.9.3'
 
 # PostgreSQL driver
 gem 'pg'
@@ -20,8 +21,3 @@ gem 'nokogiri'
 gem 'mechanize'
 
 gem 'shotgun'
-
-group :test do
-  gem 'faker'
-  gem 'rspec'
-end
