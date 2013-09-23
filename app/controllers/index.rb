@@ -5,11 +5,10 @@ get '/' do
 end
 
 get '/restaurants' do
-  # @assumption = Restaurant.find(params["assumption"].to_i)
   @assumption = Restaurant.find(params["assumption"].to_i)
   results = []
   Restaurant.all.each do |restaurant|
-    if restaurant.name != @assumption.name && restaurant.avg_price <= @assumption.avg_price + 5
+    if restaurant.name != @assumption.name# && restaurant.avg_price <= @assumption.avg_price + 5 && restaurant.food_type == @assumption.food_type
       results.push(restaurant)
     end
   end
@@ -36,4 +35,12 @@ get '/restaurant/:id/down' do
   @restaurant.votes -= 1
   @restaurant.save
   redirect '/'
+end
+
+post '/coords' do
+  puts 'FOUND'
+  @restaurant = Restaurant.find(params[:id])
+  @restaurant.lat = params[:lat]
+  @restaurant.lon = params[:lon]
+  @restaurant.save
 end
