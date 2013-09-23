@@ -45,22 +45,41 @@ function initialize() {
 }
 
 function codeAddress(address, restaurant, i_type) {
-  geocoder.geocode( { 'address': address}, function(results, status) {
-    if (status == google.maps.GeocoderStatus.OK) {
-      lat = results[0].geometry.location.ob;
-      lng = results[0].geometry.location.pb;
-      html = "<b>" + restaurant.name + "</b>" + "  - $" + 
-              restaurant.avg_price + "<br>" + 
-              restaurant.food_type + "<br><br>" +
-              "Votes: " + restaurant.votes + "<a href='/restaurant/" + restaurant.id + "/up'> + </a>" + 
-              "<a href='/restaurant/" + restaurant.id + "/down'> - </a><br>" + 
-              restaurant.address
-              ;
-      setMarker(lat, lng, html, i_type);
-    } else {
-      alert('Geocode was not successful for the following reason: ' + status);
-    }
-  });
+  var lat;
+  var lng;
+  if (restaurant.lat !== null) {
+    lat = restaurant.lat;
+    lng = restaurant.lon;
+  }
+  else {
+    geocoder.geocode( { 'address': address}, function(results, status) {
+      
+      if (status === google.maps.GeocoderStatus.OK) {
+        lat = results[0].geometry.location.ob;
+        lng = results[0].geometry.location.pb;
+
+        pkg = { 
+          lat:  lat,
+          lon:  lng,
+          id:  restaurant.id
+        };
+
+        $.ajax({
+          url: '/coords',
+          data: pkg,
+          method: 'post'
+        });
+      }
+    });
+  }
+
+  html = "<b>" + restaurant.name + "</b>" + "  - $" + 
+            restaurant.avg_price + "<br>" + 
+            restaurant.food_type + "<br><br>" +
+            "Votes: " + restaurant.votes + "<a href='/restaurant/" + restaurant.id + "/up'> + </a>" + 
+            "<a href='/restaurant/" + restaurant.id + "/down'> - </a><br>" + 
+            restaurant.address;
+  setMarker(lat, lng, html, i_type);
 }
 
 function setMarker(lat, lon, html, i_type) {
@@ -106,7 +125,7 @@ $(document).ready(function() {
       dataType: 'json'
     }).done( function(restaurants){
       for (var i in restaurants) {
-        setTimeout(codeAddress(restaurants[i].address + " Chicago", restaurants[i], "eat.png"),500);
+        codeAddress(restaurants[i].address + " Chicago", restaurants[i], "eat.png");
       }
     });
   });
@@ -119,7 +138,7 @@ $(document).ready(function() {
       data: $(this).serialize(),
       dataType: 'json'
     }).done(function(restaurant) {
-      codeAddress(restaurant.address + " Chicago", restaurant, "no_eat.png");
+      codeAddress(restaurant.address, restaurant, "no_eat.png");
     });
   });
 });

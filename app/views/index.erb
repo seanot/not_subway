@@ -16,7 +16,7 @@
     <select name="assumption">
       <% @all_restaurants.each do |a| %>
         <option value=<%=a.id%>>
-          <%= a.name %>
+          <%= a.name %> - $ <%= a.avg_price %> - <%= a.food_type %>
         </option>
       <% end %>
       </select>
