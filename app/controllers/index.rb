@@ -8,7 +8,7 @@ get '/restaurants' do
   @assumption = Restaurant.find(params["assumption"].to_i)
   results = []
   Restaurant.all.each do |restaurant|
-    if restaurant.name != @assumption.name# && restaurant.avg_price <= @assumption.avg_price + 5 && restaurant.food_type == @assumption.food_type
+    if restaurant.name != @assumption.name && restaurant.avg_price <= @assumption.avg_price + 5
       results.push(restaurant)
     end
   end
