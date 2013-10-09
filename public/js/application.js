@@ -118,6 +118,7 @@ $(document).ready(function() {
 
   $('#search_form').on('submit', function(event) {
     event.preventDefault();
+    
     $.ajax({
       url: '/restaurants',
       method: 'get',
